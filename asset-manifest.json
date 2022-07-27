@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ReactSpaceShooter/static/css/main.95f29f24.css",
+    "main.js": "/ReactSpaceShooter/static/js/main.02520753.js",
+    "static/media/threeCraft.svg": "/ReactSpaceShooter/static/media/threeCraft.366543478eb16bd5719e.svg",
+    "static/media/homeBg.svg": "/ReactSpaceShooter/static/media/homeBg.076d72dcdc6cc32f6067.svg",
+    "index.html": "/ReactSpaceShooter/index.html",
+    "main.95f29f24.css.map": "/ReactSpaceShooter/static/css/main.95f29f24.css.map",
+    "main.02520753.js.map": "/ReactSpaceShooter/static/js/main.02520753.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.95f29f24.css",
+    "static/js/main.02520753.js"
+  ]
+}
