@@ -1,11 +1,13 @@
 .container{
     display: grid;
+    position: relative;
     width: 100vw;
     height: 100vh;
     color: rgba(255, 255, 255, 1);
     background: rgba(13, 2, 38, 1);
     font-size: 1.6rem;
     text-transform: uppercase;
+    overflow: hidden;
 }
 
 .imgSection{
@@ -57,6 +59,10 @@
 
 @keyframes go-right {
     from{transform: translateX(6rem);}
+}
+
+@keyframes go-up {
+    from{transform: translateY(5rem);}
 }
 
 .menuOption{
@@ -112,18 +118,49 @@
 
 .threeCraft{
     position: absolute;
-    bottom: -15rem;
+    bottom: 0;
     left: 15rem;
     background: url('../images/threeCraft.svg') center center no-repeat;
     background-size: contain;
     width: 20rem;
     height: 15rem;
-    animation: cross 18s infinite;
+    animation: cross-v 18s infinite;
 }
 
-@keyframes cross {
+@keyframes cross-v {
     25%{bottom: -15rem;}
     50%{transform: rotateX(0deg);bottom: 115vh;}
     75%{transform: rotateX(180deg);bottom: 115vh;}
     100%{transform: rotateX(180deg);bottom: -15rem;}
+}
+
+@keyframes cross-h {
+    25%{left: -15rem;}
+    50%{transform: rotateZ(90deg);left: 115vw;}
+    75%{transform: rotateZ(270deg);left: 115vw;}
+    100%{transform: rotateZ(270deg);left: -15rem;}
+}
+
+@media (max-width:480px) {
+    .bgImg{
+        width: 105%;
+    }
+    .planet2{
+        display: none;
+    }
+    .threeCraft{
+        bottom: unset;
+        top: 15rem;
+        left: -15rem;
+        transform: rotateZ(90deg);
+        animation: cross-h 15s infinite
+    }
+    .menu{
+        width: 97vw;
+        justify-self: center;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        margin: 0;
+        animation: go-up 5s ease;
+    }
 }

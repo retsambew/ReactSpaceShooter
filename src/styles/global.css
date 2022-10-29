@@ -6,3 +6,9 @@ html{
     font-size: 62.5%;
     overflow: hidden;
 }
+
+@media (max-width:700px) {
+    html{
+        font-size: 50%;
+    }
+}
