@@ -1,0 +1,17 @@
+.gameArea{
+    width: 100vw;
+    height: 100vh;
+    background-color: #0D0226;
+    position: relative;
+}
+
+#player{
+    width: 9rem;
+    height: 9rem;
+    position: absolute;
+    left: 45%;
+    bottom: 2rem;
+    border-radius: 50% 50% 0 0;
+    background: url("../assets/playerCraft.svg") center no-repeat;
+    background-size: contain;
+}

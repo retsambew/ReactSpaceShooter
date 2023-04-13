@@ -128,6 +128,7 @@
 }
 
 @keyframes cross-v {
+    0%{bottom: -15vh;}
     25%{bottom: -15rem;}
     50%{transform: rotateX(0deg);bottom: 115vh;}
     75%{transform: rotateX(180deg);bottom: 115vh;}
@@ -135,6 +136,7 @@
 }
 
 @keyframes cross-h {
+    0%{left:-15vh;}
     25%{left: -15rem;}
     50%{transform: rotateZ(90deg);left: 115vw;}
     75%{transform: rotateZ(270deg);left: 115vw;}
