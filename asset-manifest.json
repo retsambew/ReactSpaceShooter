@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/ReactSpaceShooter/static/css/main.07904cf8.css",
-    "main.js": "/ReactSpaceShooter/static/js/main.e3f6fe46.js",
+    "main.css": "/ReactSpaceShooter/static/css/main.55110296.css",
+    "main.js": "/ReactSpaceShooter/static/js/main.5dfeb4a2.js",
     "static/media/threeCraft.svg": "/ReactSpaceShooter/static/media/threeCraft.366543478eb16bd5719e.svg",
     "static/media/playerCraft.svg": "/ReactSpaceShooter/static/media/playerCraft.708ecbb0e897f73f7526.svg",
     "static/media/homeBg.svg": "/ReactSpaceShooter/static/media/homeBg.076d72dcdc6cc32f6067.svg",
     "index.html": "/ReactSpaceShooter/index.html",
-    "main.07904cf8.css.map": "/ReactSpaceShooter/static/css/main.07904cf8.css.map",
-    "main.e3f6fe46.js.map": "/ReactSpaceShooter/static/js/main.e3f6fe46.js.map"
+    "main.55110296.css.map": "/ReactSpaceShooter/static/css/main.55110296.css.map",
+    "main.5dfeb4a2.js.map": "/ReactSpaceShooter/static/js/main.5dfeb4a2.js.map"
   },
   "entrypoints": [
-    "static/css/main.07904cf8.css",
-    "static/js/main.e3f6fe46.js"
+    "static/css/main.55110296.css",
+    "static/js/main.5dfeb4a2.js"
   ]
 }
