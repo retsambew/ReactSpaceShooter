@@ -18,11 +18,12 @@
 
 #laser{
     display: none;
-    position: relative;
+    position: absolute;
+    bottom: 10rem;
 }
 
 .shoot{
-    animation: shoot 1.1s ease;
+    animation: shoot 0.9s ease;
     display: block !important;
 }
 
@@ -31,13 +32,13 @@
         transform: translateY(0);
     }
     100%{
-        transform: translateY(-100vh);
+        transform: translateY(-120vh);
     }
 }
 
 .playerLaserLeft{
     position: absolute;
-    left: 0.4rem;
+    left: 0.2rem;
     width: 0.2rem;
     height: 3.8rem;
     background: rgba(5, 131, 228, 0.94);
@@ -48,7 +49,7 @@
 }
 
 .playerLaserRight{
-    position: absolute;
+    position: fixed;
     left: 8rem;
     width: 0.2rem;
     height: 3.8rem;
