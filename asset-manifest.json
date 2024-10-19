@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/ReactSpaceShooter/static/css/main.55110296.css",
-    "main.js": "/ReactSpaceShooter/static/js/main.5dfeb4a2.js",
-    "static/media/threeCraft.svg": "/ReactSpaceShooter/static/media/threeCraft.366543478eb16bd5719e.svg",
-    "static/media/playerCraft.svg": "/ReactSpaceShooter/static/media/playerCraft.708ecbb0e897f73f7526.svg",
-    "static/media/homeBg.svg": "/ReactSpaceShooter/static/media/homeBg.076d72dcdc6cc32f6067.svg",
-    "index.html": "/ReactSpaceShooter/index.html",
-    "main.55110296.css.map": "/ReactSpaceShooter/static/css/main.55110296.css.map",
-    "main.5dfeb4a2.js.map": "/ReactSpaceShooter/static/js/main.5dfeb4a2.js.map"
+    "main.css": "/static/css/main.bb5e965c.css",
+    "main.js": "/static/js/main.33c157ac.js",
+    "static/media/threeCraft.svg": "/static/media/threeCraft.366543478eb16bd5719e.svg",
+    "static/media/playerCraft.svg": "/static/media/playerCraft.708ecbb0e897f73f7526.svg",
+    "static/media/meteor.png": "/static/media/meteor.cfeb01ae184e3e072e4b.png",
+    "static/media/homeBg.svg": "/static/media/homeBg.076d72dcdc6cc32f6067.svg",
+    "static/media/BgStars.svg": "/static/media/BgStars.c7ac272d07b90081cf4a.svg",
+    "index.html": "/index.html",
+    "main.bb5e965c.css.map": "/static/css/main.bb5e965c.css.map",
+    "main.33c157ac.js.map": "/static/js/main.33c157ac.js.map"
   },
   "entrypoints": [
-    "static/css/main.55110296.css",
-    "static/js/main.5dfeb4a2.js"
+    "static/css/main.bb5e965c.css",
+    "static/js/main.33c157ac.js"
   ]
 }
