@@ -1,54 +1,180 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../../styles/game.module.css";
+import meteor from "../../assets/meteor.png";
 
 const Game = () => {
   const player = useRef(null);
-  const playerLazer = useRef(null);
-  // const [flag, setFlag] = useState(true);
-  let keysPressed = {};
-  const Controls = (event) => {
-    keysPressed[event.key] = true;
-    const offset = 10; //pixel
-    var playerObject = player.current.getBoundingClientRect();
-    if (keysPressed["ArrowLeft"] && playerObject.left > 0) {
-      player.current.style.left = playerObject.left - offset + "px";
-    }
-    if (keysPressed["ArrowRight"] && playerObject.right < window.innerWidth) {
-      player.current.style.left = playerObject.left + offset + "px";
-    }
-    if (playerLazer.current.className === "" && keysPressed[" "]) {
-      shoot();
-    }
-  };
-  const shoot = () => {
-    // setFlag(false);
-    playerLazer.current.className = styles.shoot;
-    playerLazer.current.style.left =
-      player.current.getBoundingClientRect().left + "px";
-    setTimeout(() => {
-      playerLazer.current.className = "";
-      // setFlag(true);
-    }, 550);
-  };
+
+  const [highScore, setHighScore] = useState(0);
+  const [enemies, setEnemies] = useState([]);
+  const [enemyCount, setEnemyCount] = useState(0);
+  const [lazers, setLazers] = useState([]);
+  const [score, setScore] = useState(0);
+  const [uid, setUid] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+
   useEffect(() => {
-    document.addEventListener("keydown", Controls);
-    document.addEventListener("keyup", (event) => {
-      delete keysPressed[event.key];
-    });
+    const highScore = localStorage.getItem("highScore");
+    if (highScore) {
+      setHighScore(highScore);
+    }
   }, []);
 
+  useEffect(() => {
+    const positionInterval = setInterval(() => {
+      updatePositions();
+    }, 1000 / 60);
+
+
+    return () => clearInterval(positionInterval);
+  }, [enemies, lazers]);
+
+  useEffect(() => {
+    generateEnemies();
+  }, [enemies]);
+
+  // Player movement control
+  const mouseMove = (event) => {
+    if (event.clientX > 90)
+      player.current.style.left = event.clientX - 90 + "px";
+  }
+
+  // Player shooting control
+  const shoot = () => {
+    if (lazers.length > 3) return;
+    setLazers([
+      ...lazers,
+      {
+        id: uid,
+        x: player.current.getBoundingClientRect().left,
+        y: player.current.getBoundingClientRect().top,
+      },
+    ]);
+    setUid(uid + 1);
+  };
+
+  const checkCollisions = () => {
+    for (let i = 0; i < enemies.length; i++) {
+      for (let j = 0; j < lazers.length; j++) {
+        if (
+          enemies[i].x < lazers[j].x + 80 &&
+          enemies[i].x + 80 > lazers[j].x &&
+          enemies[i].y < lazers[j].y + 80 &&
+          enemies[i].y + 80 > lazers[j].y
+        ) {
+          setScore(score + 10);
+          setEnemyCount(enemyCount - 1);
+          setEnemies(enemies.filter((enemy) => enemy.id !== enemies[i].id));
+          setLazers(lazers.filter((lazer) => lazer.id !== lazers[j].id));
+        }
+      }
+
+      const left = player.current.getBoundingClientRect().left;
+      const top = player.current.getBoundingClientRect().top;
+      if (
+        (enemies[i].x < left + 50 &&
+          enemies[i].x + 50 > left &&
+          enemies[i].y < top + 50 &&
+          enemies[i].y + 50 > top)
+        ||
+        (enemies[i].x < left + 80 &&
+          enemies[i].x + 80 > left &&
+          enemies[i].y < top + 50 &&
+          enemies[i].y + 20 > top)
+      ) {
+        gameover();
+      }
+    }
+  }
+
+  const updatePositions = () => {
+    setLazers(
+      lazers.map((lazer) => lazer.y > -100 ? ({
+        ...lazer,
+        y: lazer.y - 5,
+      }) : null).filter((lazer) => lazer !== null)
+    );
+
+    setEnemies(
+      enemies.map((enemy) => enemy.y < window.innerHeight ? ({
+        ...enemy,
+        y: enemy.y + 2,
+      }) : null).filter((enemy) => enemy !== null)
+    );
+    setEnemyCount(enemies.length);
+
+    checkCollisions();
+  };
+
+  const renderLazers = () => {
+    return lazers.map((lazer) => (
+      <div key={lazer.id} className={styles.lazerBox} style={{ left: lazer.x, top: lazer.y }} >
+        <div className={styles.lazer} />
+        <div className={styles.lazer} />
+      </div >
+    ));
+  };
+
+  const generateEnemies = () => {
+    if (enemyCount < 4) {
+      setEnemies([
+        ...enemies,
+        {
+          id: uid,
+          x: Math.floor(window.innerWidth * Math.random()),
+          y: -10,
+        },
+      ], enemies);
+      setUid(uid + 1);
+      setEnemyCount(enemyCount + 1);
+    }
+  };
+
+  const renderEnemies = () => {
+    return enemies.map((enemy) => (
+      <div key={enemy.id} className={styles.meteor} style={{ left: enemy.x, top: enemy.y }}>
+        <img src={meteor} alt="meteor" width={90} />
+      </div>
+    ));
+  };
+
+  const gameover = () => {
+    if (score > highScore) {
+      localStorage.setItem("highScore", score);
+      setHighScore(score);
+      // alert("Game Over! New Hi-Score: " + score);
+    }
+    else {
+      // alert("Game Over! Score: " + score);
+    }
+    setGameOver(true);
+  };
+
   return (
-    // <div onClick={() => flag && shoot()}>
-    <div>
-      <div className={styles.gameArea}>
-        <div>
-          <div id={styles.player} ref={player}></div>
-          <div id={styles.laser} ref={playerLazer}>
-            <div className={styles.playerLaserLeft} />
-            <div className={styles.playerLaserRight} />
+    <div className={styles.display}>
+      {gameOver ?
+        <div className={styles.gameover}>
+          <div className={styles.gameoverInfo}>
+            <h1>Game Over!</h1>
+            <h2>Score: {score}</h2>
+            <h2>High Score: {highScore}</h2>
+            <button className={styles.gameoverButton} onClick={() => window.location.reload()}>Play Again</button>
+            <button className={styles.gameoverButton} onClick={() => window.location.href = "/"}>Go Home</button>
+          </div>
+        </div> :
+        <div className={styles.gameArea} onClick={shoot} onMouseMove={mouseMove}>
+          {renderEnemies()}
+          {renderLazers()}
+
+          <div className={styles.score}>
+            High Score: {highScore} <br />
+            Score: {score}
+          </div>
+          <div>
+            <div id={styles.player} ref={player}></div>
           </div>
         </div>
-      </div>
+      }
     </div>
   );
 };

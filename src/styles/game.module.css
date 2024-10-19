@@ -1,61 +1,101 @@
-.gameArea{
-    width: 100vw;
-    height: 100vh;
-    background-color: #0D0226;
-    position: relative;
+.display {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	background: url("../assets/BgStars.svg") #0d0226;
+	background-size: 45%;
+	user-select: none;
+	overflow: hidden;
 }
 
-#player{
-    width: 9rem;
-    height: 9rem;
-    position: absolute;
-    left: 45%;
-    bottom: 2rem;
-    border-radius: 50% 50% 0 0;
-    background: url("../assets/playerCraft.svg") center no-repeat;
-    background-size: contain;
+.gameArea {
+	background: rgba(13, 2, 38, 0.6);
+	width: 100%;
+	height: 100%;
+	cursor: none;
 }
 
-#laser{
-    display: none;
-    position: absolute;
-    bottom: 10rem;
+#player {
+	width: 8rem;
+	height: 8rem;
+	position: absolute;
+	left: 45%;
+	bottom: 2rem;
+	border-radius: 50% 50% 0 0;
+	background: url("../assets/playerCraft.svg") center no-repeat;
+	/* background: url("../assets/playerCraft.svg") center no-repeat; */
+	background-size: contain;
 }
 
-.shoot{
-    animation: shoot 0.9s ease;
-    display: block !important;
+.lazerBox {
+	position: absolute;
+	display: flex;
+	justify-content: space-between;
+	width: 8rem;
 }
 
-@keyframes shoot {
-    0%{
-        transform: translateY(0);
-    }
-    100%{
-        transform: translateY(-120vh);
-    }
+.lazer {
+	width: 0.2rem;
+	height: 3.8rem;
+	background: rgba(5, 131, 228, 0.94);
+	border: 3px solid #1b568e;
+	box-shadow: 0px 0px 4px 4px rgba(99, 187, 255, 0.94);
+	border-radius: 0px 0px 5px 5px;
+	transform: rotate(-179.63deg);
 }
 
-.playerLaserLeft{
-    position: absolute;
-    left: 0.2rem;
-    width: 0.2rem;
-    height: 3.8rem;
-    background: rgba(5, 131, 228, 0.94);
-    border: 3px solid #1B568E;
-    box-shadow: 0px 0px 4px 4px rgba(99, 187, 255, 0.94);
-    border-radius: 0px 0px 5px 5px;
-    transform: rotate(-179.63deg);
+.meteor {
+	position: absolute;
 }
 
-.playerLaserRight{
-    position: fixed;
-    left: 8rem;
-    width: 0.2rem;
-    height: 3.8rem;
-    background: rgba(5, 131, 228, 0.94);
-    border: 3px solid #1B568E;
-    box-shadow: 0px 0px 4px 4px rgba(99, 187, 255, 0.94);
-    border-radius: 0px 0px 5px 5px;
-    transform: rotate(-179.63deg);
+.meteor > img {
+	user-select: none;
+}
+
+.score {
+	position: absolute;
+	/* width: 100px; */
+	top: 1rem;
+	right: 1.2rem;
+	color: #fff;
+	font-size: 2.4rem;
+	user-select: none;
+}
+
+.gameover {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 1.4rem;
+}
+.gameoverInfo {
+	border: 1px solid #fff;
+	width: 24rem;
+	padding: 2rem;
+	border-radius: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.gameoverButton {
+	background: #fff;
+	color: #000;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	border: 1px solid #000;
+}
+
+.gameoverButton:hover {
+	background: rgba(13, 2, 38, 0.6);
+	color: #fff;
+	border: 1px solid #fff;
 }
