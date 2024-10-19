@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../../styles/game.module.css";
 import meteor from "../../assets/meteor.png";
+import useSound from 'use-sound'
+import shootSound from "../../assets/audio/shoot.mp3";
+import gameoverSound from "../../assets/audio/gameover.mp3";
+import explosionSound from "../../assets/audio/explosion.mp3";
 
 const Game = () => {
   const player = useRef(null);
@@ -13,6 +17,11 @@ const Game = () => {
   const [uid, setUid] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
+  const [playShootSound] = useSound(shootSound, { volume: 0.25 });
+  const [playGameOverSound] = useSound(gameoverSound, { volume: 0.25 });
+  const [playExplosionSound] = useSound(explosionSound, { volume: 0.25, sprite: { explosion: [0, 1000] } });
+
+  // Load high score from local storage
   useEffect(() => {
     const highScore = localStorage.getItem("highScore");
     if (highScore) {
@@ -21,6 +30,7 @@ const Game = () => {
   }, []);
 
   useEffect(() => {
+    if (gameOver) return;
     const positionInterval = setInterval(() => {
       updatePositions();
     }, 1000 / 60);
@@ -42,6 +52,7 @@ const Game = () => {
   // Player shooting control
   const shoot = () => {
     if (lazers.length > 3) return;
+    playShootSound();
     setLazers([
       ...lazers,
       {
@@ -62,6 +73,7 @@ const Game = () => {
           enemies[i].y < lazers[j].y + 80 &&
           enemies[i].y + 80 > lazers[j].y
         ) {
+          playExplosionSound({ id: "explosion" });
           setScore(score + 10);
           setEnemyCount(enemyCount - 1);
           setEnemies(enemies.filter((enemy) => enemy.id !== enemies[i].id));
@@ -121,7 +133,7 @@ const Game = () => {
         ...enemies,
         {
           id: uid,
-          x: Math.floor(window.innerWidth * Math.random()),
+          x: Math.floor((window.innerWidth - 100) * Math.random()),
           y: -10,
         },
       ], enemies);
@@ -139,6 +151,7 @@ const Game = () => {
   };
 
   const gameover = () => {
+    playGameOverSound();
     if (score > highScore) {
       localStorage.setItem("highScore", score);
       setHighScore(score);
@@ -153,7 +166,7 @@ const Game = () => {
   return (
     <div className={styles.display}>
       {gameOver ?
-        <div className={styles.gameover}>
+        (<div className={styles.gameover}>
           <div className={styles.gameoverInfo}>
             <h1>Game Over!</h1>
             <h2>Score: {score}</h2>
@@ -161,14 +174,14 @@ const Game = () => {
             <button className={styles.gameoverButton} onClick={() => window.location.reload()}>Play Again</button>
             <button className={styles.gameoverButton} onClick={() => window.location.href = "/"}>Go Home</button>
           </div>
-        </div> :
+        </div>) :
         <div className={styles.gameArea} onClick={shoot} onMouseMove={mouseMove}>
           {renderEnemies()}
           {renderLazers()}
 
           <div className={styles.score}>
-            High Score: {highScore} <br />
-            Score: {score}
+            <p>High Score: {highScore} </p>
+            <p>Score: {score}</p>
           </div>
           <div>
             <div id={styles.player} ref={player}></div>

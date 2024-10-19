@@ -54,9 +54,10 @@
 
 .score {
 	position: absolute;
-	/* width: 100px; */
-	top: 1rem;
-	right: 1.2rem;
+	width: calc(100% - 2rem);
+	display: flex;
+	justify-content: space-between;
+	margin: 1rem;
 	color: #fff;
 	font-size: 2.4rem;
 	user-select: none;
