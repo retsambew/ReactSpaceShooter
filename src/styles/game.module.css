@@ -1,6 +1,6 @@
 .display {
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	position: relative;
 	background: url("../assets/BgStars.svg") #0d0226;
 	background-size: 45%;
@@ -23,7 +23,6 @@
 	bottom: 2rem;
 	border-radius: 50% 50% 0 0;
 	background: url("../assets/playerCraft.svg") center no-repeat;
-	/* background: url("../assets/playerCraft.svg") center no-repeat; */
 	background-size: contain;
 }
 
@@ -46,10 +45,11 @@
 
 .meteor {
 	position: absolute;
-}
+	background: url("../assets/meteor.png") center no-repeat;
+	background-size: contain;
 
-.meteor > img {
-	user-select: none;
+	width: 9rem;
+	height: 9rem;
 }
 
 .score {
@@ -99,4 +99,14 @@
 	background: rgba(13, 2, 38, 0.6);
 	color: #fff;
 	border: 1px solid #fff;
+}
+
+@media (max-width: 768px) {
+	.score {
+		font-size: 2rem;
+	}
+	.meteor {
+		width: 7rem;
+		height: 7rem;
+	}
 }

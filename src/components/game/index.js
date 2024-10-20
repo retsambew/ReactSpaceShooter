@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../../styles/game.module.css";
-import meteor from "../../assets/meteor.png";
 import useSound from 'use-sound'
 import shootSound from "../../assets/audio/shoot.mp3";
 import gameoverSound from "../../assets/audio/gameover.mp3";
@@ -9,39 +8,37 @@ import explosionSound from "../../assets/audio/explosion.mp3";
 const Game = () => {
   const player = useRef(null);
 
+  const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+  const [lastScore, setLastScore] = useState(0);
+  const [uid, setUid] = useState(0);
+  const [lazers, setLazers] = useState([]);
   const [enemies, setEnemies] = useState([]);
   const [enemyCount, setEnemyCount] = useState(0);
-  const [lazers, setLazers] = useState([]);
-  const [score, setScore] = useState(0);
-  const [uid, setUid] = useState(0);
+  const [enemySpeed, setEnemySpeed] = useState(2);
+  const [maxEnemies, setMaxEnemies] = useState(3);
   const [gameOver, setGameOver] = useState(false);
+  const [gamePaused, setGamePaused] = useState(false);
 
   const [playShootSound] = useSound(shootSound, { volume: 0.25 });
   const [playGameOverSound] = useSound(gameoverSound, { volume: 0.25 });
   const [playExplosionSound] = useSound(explosionSound, { volume: 0.25, sprite: { explosion: [0, 1000] } });
 
-  // Load high score from local storage
+  // Load high score from local storage and pause game on escape key press
   useEffect(() => {
     const highScore = localStorage.getItem("highScore");
     if (highScore) {
       setHighScore(highScore);
     }
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setGamePaused(true);
+      }
+    });
+
+    return () => window.removeEventListener("keydown", () => { });
   }, []);
-
-  useEffect(() => {
-    if (gameOver) return;
-    const positionInterval = setInterval(() => {
-      updatePositions();
-    }, 1000 / 60);
-
-
-    return () => clearInterval(positionInterval);
-  }, [enemies, lazers]);
-
-  useEffect(() => {
-    generateEnemies();
-  }, [enemies]);
 
   // Player movement control
   const mouseMove = (event) => {
@@ -51,6 +48,7 @@ const Game = () => {
 
   // Player shooting control
   const shoot = () => {
+    if (gamePaused) setGamePaused(false);
     if (lazers.length > 3) return;
     playShootSound();
     setLazers([
@@ -64,6 +62,7 @@ const Game = () => {
     setUid(uid + 1);
   };
 
+  // Check for collisions between lazers, enemies and player
   const checkCollisions = () => {
     for (let i = 0; i < enemies.length; i++) {
       for (let j = 0; j < lazers.length; j++) {
@@ -99,6 +98,7 @@ const Game = () => {
     }
   }
 
+  // Update positions of lazers and enemies
   const updatePositions = () => {
     setLazers(
       lazers.map((lazer) => lazer.y > -100 ? ({
@@ -110,14 +110,21 @@ const Game = () => {
     setEnemies(
       enemies.map((enemy) => enemy.y < window.innerHeight ? ({
         ...enemy,
-        y: enemy.y + 2,
+        y: enemy.y + enemySpeed,
       }) : null).filter((enemy) => enemy !== null)
     );
     setEnemyCount(enemies.length);
 
+    if (score > 0 && score % 50 === 0 && score !== lastScore) {
+      setEnemySpeed(enemySpeed + 0.25);
+      setMaxEnemies(maxEnemies + 0.5);
+      setLastScore(score);
+    }
+
     checkCollisions();
   };
 
+  // Render lazers
   const renderLazers = () => {
     return lazers.map((lazer) => (
       <div key={lazer.id} className={styles.lazerBox} style={{ left: lazer.x, top: lazer.y }} >
@@ -127,8 +134,9 @@ const Game = () => {
     ));
   };
 
+  // Generate enemies
   const generateEnemies = () => {
-    if (enemyCount < 4) {
+    if (enemyCount < maxEnemies) {
       setEnemies([
         ...enemies,
         {
@@ -142,14 +150,14 @@ const Game = () => {
     }
   };
 
+  // Render enemies
   const renderEnemies = () => {
     return enemies.map((enemy) => (
-      <div key={enemy.id} className={styles.meteor} style={{ left: enemy.x, top: enemy.y }}>
-        <img src={meteor} alt="meteor" width={90} />
-      </div>
+      <div key={enemy.id} className={styles.meteor} style={{ left: enemy.x, top: enemy.y }} />
     ));
   };
 
+  // Game over screen and save high score
   const gameover = () => {
     playGameOverSound();
     if (score > highScore) {
@@ -162,6 +170,18 @@ const Game = () => {
     }
     setGameOver(true);
   };
+
+  // update positions and generate enemies
+  useEffect(() => {
+    if (gameOver || gamePaused) return;
+    const interval = setInterval(() => {
+      updatePositions();
+      generateEnemies();
+    }, 1000 / 60);
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enemies, lazers]);
 
   return (
     <div className={styles.display}>
