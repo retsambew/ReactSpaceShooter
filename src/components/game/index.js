@@ -48,8 +48,18 @@ const Game = () => {
 
   // Player shooting control
   const shoot = () => {
+    // shooting timeout
+    if (player.current.shootingTimeout) return;
+    player.current.shootingTimeout = setTimeout(() => {
+      player.current.shootingTimeout = null;
+    }, 400);
+
+    // continue game if paused
     if (gamePaused) setGamePaused(false);
+
+    // shooting limit
     if (lazers.length > 3) return;
+
     playShootSound();
     setLazers([
       ...lazers,
