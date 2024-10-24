@@ -1,0 +1,25 @@
+.pauseOverlay {
+	position: absolute;
+	width: 100vw;
+	height: 100dvh;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+	cursor: default;
+}
+
+.pauseOverlayContent {
+	color: #fff;
+	font-size: 1.4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1.2rem;
+}
+
+.pauseOverlayContent > h1 {
+	font-size: 5rem;
+}

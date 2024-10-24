@@ -25,7 +25,7 @@ const Home = () => {
         <hr />
         <Link to='/help' className={styles.menuOption}><h2>Help</h2></Link>
         <hr />
-        <Link to='/credits' className={styles.menuOption}><h2>Credits</h2></Link>
+        <Link to='/difficulty' className={styles.menuOption}><h2>Difficulty</h2></Link>
       </div>
     </div>
   )

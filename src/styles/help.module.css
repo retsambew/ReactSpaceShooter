@@ -1,0 +1,62 @@
+.helpScreen {
+	width: 100%;
+	height: 100vh;
+	color: rgba(255, 255, 255, 1);
+	background: rgba(13, 2, 38, 1);
+}
+
+.helpScreenContainer {
+	width: 70%;
+	height: 75dvh;
+	margin: auto;
+	background-color: rgba(171, 167, 147, 0.1);
+	border-radius: 1rem;
+	padding: 2rem;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	justify-content: center;
+}
+
+.helpScreenHeading {
+	font-size: 5rem;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 4rem 0;
+}
+
+.helpScreenContainer p {
+	font-size: 1.8rem;
+	line-height: 1.5;
+}
+
+.helpScreenContainer h2 {
+	font-size: 2.4rem;
+	text-transform: uppercase;
+	margin: 3rem 0 1.5rem;
+}
+
+.helpScreenContainer strong {
+	color: #6258bf;
+	text-transform: uppercase;
+}
+
+.playNowButton {
+	display: inline-block;
+	padding: 1rem 2rem;
+	font-size: 2rem;
+	color: #fff;
+	background-color: #4e46a1;
+	border: none;
+	border-radius: 0.5rem;
+	text-transform: uppercase;
+	cursor: pointer;
+	text-align: center;
+	transition: background-color 0.3s ease;
+	margin-top: 2rem;
+}
+
+.playNowButton:hover {
+	background-color: #6258bf;
+}

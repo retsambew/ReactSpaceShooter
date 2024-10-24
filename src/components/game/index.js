@@ -4,6 +4,7 @@ import useSound from 'use-sound'
 import shootSound from "../../assets/audio/shoot.mp3";
 import gameoverSound from "../../assets/audio/gameover.mp3";
 import explosionSound from "../../assets/audio/explosion.mp3";
+import gamePauseOverlay from "./gamePauseOverlay";
 
 const Game = () => {
   const player = useRef(null);
@@ -42,7 +43,7 @@ const Game = () => {
 
   // Player movement control
   const mouseMove = (event) => {
-    if (event.clientX > 90)
+    if (event.clientX > 90 && !gamePaused)
       player.current.style.left = event.clientX - 90 + "px";
   }
 
@@ -206,6 +207,7 @@ const Game = () => {
           </div>
         </div>) :
         <div className={styles.gameArea} onClick={shoot} onMouseMove={mouseMove}>
+          {gamePaused && gamePauseOverlay()}
           {renderEnemies()}
           {renderLazers()}
 
